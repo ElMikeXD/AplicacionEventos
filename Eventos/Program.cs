@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Eventos
 {
@@ -17,11 +18,10 @@ namespace Eventos
             {
                 cadena = evento.Split(',');
 
-                //DateTime dtFecha = Convert.ToDateTime(cadena[1]);
+                //string cFechaConvertida = DateTime.ParseExact(cadena[1], "dd-MM-yyyy", CultureInfo.InvariantCulture)
+                //      .ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
 
-                string FormatoFecha = String.Format("{0:MM/dd/yyyy}", cadena[1]);
-
-                lstEventos.Add( new Evento { cEvento = cadena[0], dtFechaEvento = Convert.ToDateTime(cadena[1])});
+                lstEventos.Add( new Evento { cEvento = cadena[0], dtFechaEvento = Convert.ToDateTime(cadena[1]) });
                 
                 Console.WriteLine("Evento: {0}  Fecha: {1}", cadena[0], cadena[1]);               
             }
@@ -30,14 +30,13 @@ namespace Eventos
 
             foreach (Evento e in lstEventos)
             {
-                ObtenerTiempo(e.cEvento, e.dtFechaEvento);
-                Console.WriteLine(ObtenerTiempo(e.cEvento, e.dtFechaEvento) + "\n----------------------");
+                Console.WriteLine(ObtenerTiempo(e.dtFechaEvento) + "\n----------------------");
             }
 
             Console.ReadKey();
         }
 
-        public static string ObtenerTiempo(string cEvento, DateTime dtFechaEvento)
+        public static string ObtenerTiempo(DateTime dtFechaEvento)
         {
             string cMensaje;
 
@@ -48,12 +47,12 @@ namespace Eventos
             cResult = ValidarFecha(dtDiferenciaFechas);
 
             if (dtFechaEvento >= DateTime.Now)
-            {
-                cMensaje = "faltan";
+            { 
+                cMensaje = "Faltan ";
             }
             else
             {
-                cMensaje = "fue hace ";
+                cMensaje = "Fue hace ";
             }
 
             return cMensaje + cResult;
@@ -61,23 +60,24 @@ namespace Eventos
 
         public static string ValidarFecha(TimeSpan dtDiferenciaFechas)
         {
-            string cMensaje = dtDiferenciaFechas.Seconds + " Segundos";
+            string cMensaje = Math.Abs(dtDiferenciaFechas.Seconds) + " Segundos";
 
-            if (dtDiferenciaFechas.TotalSeconds >= 60)
+            if (Math.Abs(dtDiferenciaFechas.TotalSeconds) >= 60)
             {
-                cMensaje = dtDiferenciaFechas.Minutes + " Minutos";
+                cMensaje = Math.Abs(dtDiferenciaFechas.Minutes) + " Minutos";
             }
-            if (dtDiferenciaFechas.TotalSeconds >= 3600)
+            if (Math.Abs(dtDiferenciaFechas.TotalSeconds) >= 3600)
             {
-                cMensaje = dtDiferenciaFechas.Hours + " Horas";
+                cMensaje = Math.Abs(dtDiferenciaFechas.Hours) + " Horas";
             }
-            if (dtDiferenciaFechas.TotalSeconds >= 86400)
+            if (Math.Abs(dtDiferenciaFechas.TotalSeconds) >= 86400)
             {
-                cMensaje = dtDiferenciaFechas.Days + " Días";
+                cMensaje = Math.Abs(dtDiferenciaFechas.Days) + " Días";
             }
-            if (dtDiferenciaFechas.TotalSeconds >= 2592000)
+            if (Math.Abs(dtDiferenciaFechas.TotalSeconds) >= 2592000)
             {
-                cMensaje = "1 Mes";
+                double iMeses = Math.Abs(dtDiferenciaFechas.TotalSeconds) / 2592000;
+                cMensaje = Convert.ToInt32(iMeses) + " Mes";
             }
 
             return cMensaje;
