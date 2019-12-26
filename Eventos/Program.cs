@@ -11,8 +11,6 @@ namespace Eventos
         {
             string[] cEventos = System.IO.File.ReadAllLines(@"C:\Users\ELMike\Desktop\Enventos.txt");
 
-            System.Console.WriteLine("Evento: ");
-
             string[] cadena;
 
             foreach (string evento in cEventos)
@@ -28,12 +26,12 @@ namespace Eventos
                 Console.WriteLine("Evento: {0}  Fecha: {1}", cadena[0], cadena[1]);               
             }
 
-            Console.WriteLine("\t-------------------");
+            Console.WriteLine("-----------------------");
 
             foreach (Evento e in lstEventos)
             {
                 ObtenerTiempo(e.cEvento, e.dtFechaEvento);
-                Console.WriteLine("\n----------------------");
+                Console.WriteLine(ObtenerTiempo(e.cEvento, e.dtFechaEvento) + "\n----------------------");
             }
 
             Console.ReadKey();
@@ -55,15 +53,15 @@ namespace Eventos
             }
             else
             {
-                cMensaje = "faltan";
+                cMensaje = "fue hace ";
             }
 
-            return cMensaje;
+            return cMensaje + cResult;
         }
 
         public static string ValidarFecha(TimeSpan dtDiferenciaFechas)
         {
-            string cMensaje;
+            string cMensaje = dtDiferenciaFechas.Seconds + " Segundos";
 
             if (dtDiferenciaFechas.TotalSeconds >= 60)
             {
@@ -80,10 +78,6 @@ namespace Eventos
             if (dtDiferenciaFechas.TotalSeconds >= 2592000)
             {
                 cMensaje = "1 Mes";
-            }
-            else
-            {
-                cMensaje = dtDiferenciaFechas.Seconds + " Segundos";
             }
 
             return cMensaje;
