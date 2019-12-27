@@ -53,53 +53,6 @@ namespace Eventos
             }
         }
 
-        public static string ObtenerTiempo(DateTime dtFechaEvento)
-        {
-            string cMensaje;
-
-            string cResult;
-
-            TimeSpan dtDiferenciaFechas = (DateTime.Now - dtFechaEvento);
-
-            cResult = ValidarFecha(dtDiferenciaFechas);
-
-            if (dtFechaEvento >= DateTime.Now) //pasar a clase
-            { 
-                cMensaje = "Faltan ";
-            }
-            else
-            {
-                cMensaje = "Fue hace ";
-            }
-
-            return cMensaje + cResult;
-        }
-
-        public static string ValidarFecha(TimeSpan dtDiferenciaFechas)
-        {
-            string cMensaje = Math.Abs(dtDiferenciaFechas.Seconds) + " Segundos";
-
-            if (Math.Abs(dtDiferenciaFechas.TotalSeconds) >= 60)
-            {
-                cMensaje = Math.Abs(dtDiferenciaFechas.Minutes) + " Minutos";
-            }
-            if (Math.Abs(dtDiferenciaFechas.TotalSeconds) >= 3600)
-            {
-                cMensaje = Math.Abs(dtDiferenciaFechas.Hours) + " Horas";
-            }
-            if (Math.Abs(dtDiferenciaFechas.TotalSeconds) >= 86400)
-            {
-                cMensaje = Math.Abs(dtDiferenciaFechas.Days) + " Días";
-            }
-            if (Math.Abs(dtDiferenciaFechas.TotalSeconds) >= 2592000)
-            {
-                double iMeses = Math.Abs(dtDiferenciaFechas.TotalSeconds) / 2592000;
-                cMensaje = Convert.ToInt32(iMeses) + " Mes";
-            }
-
-            return cMensaje;
-        }
-
         static void Main(string[] args)
         {
             Eventos();
