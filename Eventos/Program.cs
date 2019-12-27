@@ -1,39 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace Eventos
 {
     class Program
     {
-        static List<Evento> lstEventos = new List<Evento>();  
-
-        public static void Lector()
+        public static void Eventos()
         {
-            string[] cEventos = System.IO.File.ReadAllLines(@"C:\Users\ELMike\Desktop\Enventos.txt");
+            Minutos _oMinutos = new Minutos();
+            Horas _oHoras = new Horas();
+            Dias _oDias = new Dias();
+            Meses _oMeses = new Meses();
 
-            string[] cadena;
+            LecturaTXT _oLectuta = new LecturaTXT();
 
-            foreach (string evento in cEventos)
+            List<Evento> _lstEventos = _oLectuta.ExtraerEventos(@"C:\Users\ELMike\Desktop\Enventos.txt");
+
+            foreach (Evento e in _lstEventos)
             {
-                cadena = evento.Split(',');
+                TimeSpan _dtDiferenciaFechas = Diferenciador.ObtenerdifereciaFechas(e.dtFechaEvento);
 
-                //string cFechaConvertida = DateTime.ParseExact(cadena[1], "dd-MM-yyyy", CultureInfo.InvariantCulture)
-                //      .ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+                switch (ClasificadorTiempo.ClasificarTiempo(_dtDiferenciaFechas))
+                {
+                    case "Segundos":
+                        break;
 
-                lstEventos.Add( new Evento { cEvento = cadena[0], dtFechaEvento = Convert.ToDateTime(cadena[1]) });
-                
-                Console.WriteLine("Evento: {0}  Fecha: {1}", cadena[0], cadena[1]);               
+                    case "Minutos":
+                        _oMinutos.ObtenerDiferenciaTiempo(_dtDiferenciaFechas);
+                        break;
+
+                    case "Horas":
+                        _oHoras.ObtenerDiferenciaTiempo(_dtDiferenciaFechas);
+                        break;
+
+                    case "Días":
+                        _oDias.ObtenerDiferenciaTiempo(_dtDiferenciaFechas);
+                        break;
+
+                    case "Meses":
+                        _oMeses.ObtenerDiferenciaTiempo(_dtDiferenciaFechas);
+                        break;
+
+                    default:
+                        break;
+                }
             }
-
-            Console.WriteLine("-----------------------");
-
-            foreach (Evento e in lstEventos)
-            {
-                Console.WriteLine(ObtenerTiempo(e.dtFechaEvento) + "\n----------------------");
-            }
-
-            Console.ReadKey();
         }
 
         public static string ObtenerTiempo(DateTime dtFechaEvento)
@@ -46,7 +57,7 @@ namespace Eventos
 
             cResult = ValidarFecha(dtDiferenciaFechas);
 
-            if (dtFechaEvento >= DateTime.Now)
+            if (dtFechaEvento >= DateTime.Now) //pasar a clase
             { 
                 cMensaje = "Faltan ";
             }
@@ -85,7 +96,7 @@ namespace Eventos
 
         static void Main(string[] args)
         {
-            Lector();
+            Eventos();
         }
 
     }
