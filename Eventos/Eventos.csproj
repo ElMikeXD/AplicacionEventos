@@ -48,6 +48,7 @@
     <Compile Include="Dias.cs" />
     <Compile Include="Diferenciador.cs" />
     <Compile Include="Horas.cs" />
+    <Compile Include="IDiferenciador.cs" />
     <Compile Include="IVisualizador.cs" />
     <Compile Include="LecturaTXT.cs" />
     <Compile Include="Evento.cs" />

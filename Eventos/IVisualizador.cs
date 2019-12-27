@@ -2,6 +2,6 @@
 {
     interface IVisualizador
     {
-        void VisualizarResultado(string cEvento, string cResultado);
+        void VisualizarResultado(string cEvento, string cTiempo, string cResultado);
     }
 }

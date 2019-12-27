@@ -2,9 +2,9 @@
 
 namespace Eventos
 {
-    public static class Diferenciador
+    public class Diferenciador : IDiferenciador
     {
-        public static TimeSpan ObtenerdifereciaFechas(DateTime dtFechaEvento)
+        public TimeSpan Obtenerdiferecia(DateTime dtFechaEvento)
         {
             TimeSpan dtDiferenciaFechas = (DateTime.Now - dtFechaEvento);
 

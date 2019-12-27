@@ -4,9 +4,9 @@ namespace Eventos
 {
     public class Visualizador : IVisualizador
     {
-        public void VisualizarResultado(string cEvento, string cResultado)
+        public void VisualizarResultado(string cEvento, string cTiempo, string cResultado)
         {
-            Console.WriteLine("El evento: {0} ", cEvento, cResultado);
+            Console.WriteLine("El evento: {0} {1} {2}", cEvento, cTiempo, cResultado);
         }
     }
 }

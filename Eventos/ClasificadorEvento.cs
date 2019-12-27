@@ -4,11 +4,9 @@ namespace Eventos
 {
     public static class ClasificadorEvento
     {
-        public  static bool ClasificarEventos(DateTime dtFechaEvento)
+        public  static string ClasificarEventos(DateTime dtFechaEvento)
         {
-            TimeSpan dtDiferenciaFechas = (DateTime.Now - dtFechaEvento);
-
-            return dtFechaEvento > DateTime.Now ? true : false;
+            return dtFechaEvento <= DateTime.Now ? "ocurrió hace" : "ocurrirá dentro de";
         }
     }
 }
