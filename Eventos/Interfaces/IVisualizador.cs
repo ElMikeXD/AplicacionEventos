@@ -1,6 +1,6 @@
 ﻿namespace Eventos
 {
-    interface IVisualizador
+    public interface IVisualizarMensajes
     {
         void VisualizarResultado(string cEvento, string cTiempo, string cResultado);
     }

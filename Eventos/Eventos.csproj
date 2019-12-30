@@ -43,26 +43,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClasificadorEvento.cs" />
-    <Compile Include="ClasificadorTiempo.cs" />
-    <Compile Include="Dias.cs" />
-    <Compile Include="Diferenciador.cs" />
-    <Compile Include="Horas.cs" />
-    <Compile Include="IDiferenciador.cs" />
-    <Compile Include="IVisualizador.cs" />
-    <Compile Include="LecturaTXT.cs" />
-    <Compile Include="Evento.cs" />
-    <Compile Include="ILector.cs" />
-    <Compile Include="IRangoTiempo.cs" />
-    <Compile Include="Meses.cs" />
-    <Compile Include="Minutos.cs" />
+    <Compile Include="Entidades\IUnidadesTiempo.cs" />
+    <Compile Include="Interfaces\IEvento.cs" />
+    <Compile Include="Entidades\UnidadesTiempo.cs" />
+    <Compile Include="Interfaces\IProcesador.cs" />
+    <Compile Include="Logica\ClasificadorEvento.cs" />
+    <Compile Include="Logica\ClasificadorUnidadTiempo.cs" />
+    <Compile Include="Logica\Diferenciador.cs" />
+    <Compile Include="Interfaces\IDiferenciador.cs" />
+    <Compile Include="Interfaces\IVisualizador.cs" />
+    <Compile Include="Interfaces\IClasificadorEvento.cs" />
+    <Compile Include="Interfaces\IClasificadorUnidadTiempo.cs" />
+    <Compile Include="Interfaces\IProcesadorBase.cs" />
+    <Compile Include="Logica\LecturaTXT.cs" />
+    <Compile Include="Entidades\Evento.cs" />
+    <Compile Include="Interfaces\ILector.cs" />
+    <Compile Include="Interfaces\IRangoTiempo.cs" />
+    <Compile Include="Logica\ProcesadorBase.cs" />
+    <Compile Include="Logica\ProcesadorDatos.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tiempo.cs" />
-    <Compile Include="Visualizador.cs" />
+    <Compile Include="Logica\Visualizador.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ArchivoEventos\Eventos.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

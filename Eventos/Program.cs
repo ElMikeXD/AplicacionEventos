@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Eventos;
+using Eventos.Entidades;
+using Eventos.Logica;
+using System;
 using System.Collections.Generic;
 
 namespace Eventos
@@ -7,49 +10,30 @@ namespace Eventos
     {
         public static void Eventos()
         {
-            Minutos _oMinutos = new Minutos();
-            Horas _oHoras = new Horas();
-            Dias _oDias = new Dias();
-            Meses _oMeses = new Meses();
+            string _cRutaArchivo = "../../ArchivoEventos/Eventos.txt"; 
 
-            Diferenciador _oDiferenciador = new Diferenciador();
-
-            Visualizador _oVisualizador = new Visualizador();
-
-            LecturaTXT _oLectuta = new LecturaTXT();
-
-            List<Evento> _lstEventos = _oLectuta.ExtraerEventos(@"C:\Users\ELMike\Desktop\Enventos.txt");
-
-            foreach (Evento e in _lstEventos)
+            List<UnidadesTiempo> _lstUnidadesTiempo = new List<UnidadesTiempo>
             {
-                TimeSpan _dtDiferenciaFechas = _oDiferenciador.Obtenerdiferecia(e.dtFechaEvento);
+                new UnidadesTiempo { cUnidad = "Minutos", iValorSegundos = 60 },
+                new UnidadesTiempo { cUnidad = "Horas", iValorSegundos = 3600 },
+                new UnidadesTiempo { cUnidad = "Días", iValorSegundos = 86400 },
+                new UnidadesTiempo { cUnidad = "Semanas", iValorSegundos = 604800 },
+                new UnidadesTiempo { cUnidad = "Meses", iValorSegundos = 2592000 },
+                new UnidadesTiempo { cUnidad = "Años", iValorSegundos = 31556900 }
+            };
 
-                string _cClasificacionEvento = ClasificadorEvento.ClasificarEventos(e.dtFechaEvento);
+            ILector _LecturaArchivo = new LecturaTXT();
+            IProcesador _procesadorDatos = new ProcesadorDatos();
 
-                switch (ClasificadorTiempo.ClasificarTiempo(_dtDiferenciaFechas))
-                {
-                    case "Segundos":
-                        break;
+            String[] _arrayEventos = _LecturaArchivo.ExtraerEventos(_cRutaArchivo);
 
-                    case "Minutos":
-                        _oVisualizador.VisualizarResultado(e.cEvento, _cClasificacionEvento, _oMinutos.ObtenerDiferenciaTiempo(_dtDiferenciaFechas)); 
-                        break;
+            List<Evento> _lstEventos = _procesadorDatos.ProcesarDatos(_arrayEventos);
 
-                    case "Horas":
-                        _oVisualizador.VisualizarResultado(e.cEvento, _cClasificacionEvento, _oHoras.ObtenerDiferenciaTiempo(_dtDiferenciaFechas));
-                        break;
+            IProcesadorBase _procesadorBase = new ProcesadorBase(new ClasificadorEvento(), new ClasificadorUnidadTiempo(), new Diferenciador(), new Visualizador());
 
-                    case "Días":
-                        _oVisualizador.VisualizarResultado(e.cEvento, _cClasificacionEvento, _oDias.ObtenerDiferenciaTiempo(_dtDiferenciaFechas));
-                        break;
-
-                    case "Meses":
-                        _oVisualizador.VisualizarResultado(e.cEvento, _cClasificacionEvento, _oMeses.ObtenerDiferenciaTiempo(_dtDiferenciaFechas));
-                        break;
-
-                    default:
-                        break;
-                }
+            foreach (Evento Evento in _lstEventos)
+            {
+                _procesadorBase.ProcesarFechaEventos(Evento, _lstUnidadesTiempo);
             }
         }
 
